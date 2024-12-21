@@ -4,11 +4,15 @@
     "drizzle-kit": "npm:drizzle-kit@^0.30.1",
     "drizzle-orm": "npm:drizzle-orm@^0.38.2",
     "hono": "jsr:@hono/hono@^4.6.14",
-    "pg": "npm:pg@^8.13.1"
+    "pg": "npm:pg@^8.13.1",
+    "uuidv7": "npm:uuidv7@^1.0.2"
   },
   "tasks": {
     "start": "deno run --allow-net main.ts",
-    "dev":"deno run --allow-all --watch main.ts"
+    "dev":"deno run --allow-all --watch main.ts",
+    "drizzle:gen":"deno -A --node-modules-dir npm:drizzle-kit generate",
+    "drizzle:push":"deno -A --node-modules-dir npm:drizzle-kit push ",
+    "drizzle:migrate":"deno -A --node-modules-dir npm:drizzle-kit migrate "
   },
   "compilerOptions": {
     "jsx": "precompile",
