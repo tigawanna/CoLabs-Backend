@@ -1,5 +1,6 @@
-import { pgTable, varchar, integer, pgEnum, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, varchar, integer, pgEnum, jsonb, text, timestamp } from "drizzle-orm/pg-core";
 import { commonColumns } from "../helpers/columns.ts";
+import { usersTable } from "./users.ts";
 
 const projectType = ["private", "open-source"] as const;
 const platforms = ["web", "mobile", "desktop"] as const;
@@ -11,7 +12,9 @@ export const projectsTable = pgTable("projects", {
   ...commonColumns,
   title: varchar({ length: 255 }).notNull(),
   description: varchar({ length: 255 }).notNull(),
-  owner: varchar({ length: 255 }).notNull(),
+  owner: text()
+    .references(() => usersTable.id)
+    .notNull(),
   type: projectTypeEnum().default("open-source"),
   platform: platformEnum().default("web"),
   compensation: jsonb().default({
@@ -24,6 +27,12 @@ export const projectsTable = pgTable("projects", {
   issuesCount: integer().default(0),
   forksCount: integer().default(0),
   starCount: integer().default(0),
-  lastCommitDate: varchar({ length: 255 }),
-  collaborators: varchar({ length: 255 }).default("[]"),
+  lastCommitDate: timestamp({withTimezone: true, mode: 'string'}).defaultNow(),
+  // collaborators: jsonb().default([]),
 });
+
+export const projectCollaboratorsTable = pgTable("projects_collaborators", {
+  ...commonColumns,
+  project_id: text().references(() => projectsTable.id).notNull(),
+  user_id: text().references(() => usersTable.id).notNull(),
+})

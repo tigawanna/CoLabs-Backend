@@ -13,7 +13,8 @@
     "dev":"deno run --allow-all --watch main.ts",
     "drizzle:gen":"deno -A --node-modules-dir npm:drizzle-kit generate",
     "drizzle:push":"deno -A --node-modules-dir npm:drizzle-kit push ",
-    "drizzle:migrate":"deno -A --node-modules-dir npm:drizzle-kit migrate "
+    "drizzle:migrate":"deno -A --node-modules-dir npm:drizzle-kit migrate ",
+    "drizzle:seed":"deno -A --node-modules-dir -A --env-file  npm:drizzle-seed"
   },
   "compilerOptions": {
     "jsx": "precompile",
