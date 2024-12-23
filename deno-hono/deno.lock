@@ -2,6 +2,7 @@
   "version": "4",
   "specifiers": {
     "jsr:@hono/hono@^4.6.14": "4.6.14",
+    "npm:@hono/zod-openapi@~0.18.3": "0.18.3_hono@4.6.14_zod@3.23.8",
     "npm:@types/node@*": "22.0.0",
     "npm:@types/pg@^8.11.10": "8.11.10",
     "npm:drizzle-kit@*": "0.30.1_esbuild@0.19.12",
@@ -20,6 +21,13 @@
     }
   },
   "npm": {
+    "@asteasolutions/zod-to-openapi@7.3.0_zod@3.23.8": {
+      "integrity": "sha512-7tE/r1gXwMIvGnXVUdIqUhCU1RevEFC4Jk6Bussa0fk1ecbnnINkZzj1EOAJyE/M3AI25DnHT/zKQL1/FPFi8Q==",
+      "dependencies": [
+        "openapi3-ts",
+        "zod"
+      ]
+    },
     "@drizzle-team/brocli@0.10.2": {
       "integrity": "sha512-z33Il7l5dKjUgGULTqBsQBQwckHh5AbIuxhdsIxDDiZAzBOrZO6q9ogcWC65kU382AfynTfgNumVcNIjuIua6w=="
     },
@@ -172,6 +180,22 @@
     "@esbuild/win32-x64@0.19.12": {
       "integrity": "sha512-T1QyPSDCyMXaO3pzBkF96E8xMkiRYbUEZADd29SyPGabqxMViNoii+NcK7eWJAEoU6RZyEm5lVSIjTmcdoB9HA=="
     },
+    "@hono/zod-openapi@0.18.3_hono@4.6.14_zod@3.23.8": {
+      "integrity": "sha512-bNlRDODnp7P9Fs13ZPajEOt13G0XwXKfKRHMEFCphQsFiD1Y+twzHaglpNAhNcflzR1DQwHY92ZS06b4LTPbIQ==",
+      "dependencies": [
+        "@asteasolutions/zod-to-openapi",
+        "@hono/zod-validator",
+        "hono",
+        "zod"
+      ]
+    },
+    "@hono/zod-validator@0.4.2_hono@4.6.14_zod@3.23.8": {
+      "integrity": "sha512-1rrlBg+EpDPhzOV4hT9pxr5+xDVmKuz6YJl+la7VCwK6ass5ldyKm5fD+umJdV2zhHD6jROoCCv8NbTwyfhT0g==",
+      "dependencies": [
+        "hono",
+        "zod"
+      ]
+    },
     "@types/node@22.0.0": {
       "integrity": "sha512-VT7KSYudcPOzP5Q0wfbowyNLaVR8QWUdw+088uFWwfvpY6uCWaXpqV6ieLAu9WBcnTa7H4Z5RLK8I5t2FuOcqw==",
       "dependencies": [
@@ -298,6 +322,12 @@
     "obuf@1.1.2": {
       "integrity": "sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg=="
     },
+    "openapi3-ts@4.4.0": {
+      "integrity": "sha512-9asTNB9IkKEzWMcHmVZE7Ts3kC9G7AFHfs8i7caD8HbI76gEjdkId4z/AkP83xdZsH7PLAnnbl47qZkXuxpArw==",
+      "dependencies": [
+        "yaml"
+      ]
+    },
     "pg-cloudflare@1.1.1": {
       "integrity": "sha512-xWPagP/4B6BgFO+EKz3JONXv3YDgvkbVrGw2mTo3D6tVDQRh1e7cqVGvyR3BE+eQgAvx1XhW/iEASj4/jCWl3Q=="
     },
@@ -419,6 +449,9 @@
     "xtend@4.0.2": {
       "integrity": "sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ=="
     },
+    "yaml@2.6.1": {
+      "integrity": "sha512-7r0XPzioN/Q9kXBro/XPnA6kznR73DHq+GXh5ON7ZozRO6aMjbmiBuKste2wslTFkC5d1dw0GooOCepZXJ2SAg=="
+    },
     "zod@3.23.8": {
       "integrity": "sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g=="
     }
@@ -426,6 +459,7 @@
   "workspace": {
     "dependencies": [
       "jsr:@hono/hono@^4.6.14",
+      "npm:@hono/zod-openapi@~0.18.3",
       "npm:@types/pg@^8.11.10",
       "npm:drizzle-kit@~0.30.1",
       "npm:drizzle-orm@~0.38.2",
