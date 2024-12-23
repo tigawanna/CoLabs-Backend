@@ -1,7 +1,8 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import pg from "pg";
-import { usersTable } from "./schema/users.ts";
-import { projectsTable } from "./schema/project.ts";
+import * as userSchema from "./schema/users.ts";
+import * as projectSchema from "./schema/project.ts";
+
 
 
 // Use pg driver.
@@ -12,7 +13,9 @@ export const db = drizzle({
   client: new Pool({
     connectionString: Deno.env.get("DATABASE_URL"),
   }),
-  schema: {usersTable,projectsTable },
+  schema: { ...userSchema, ...projectSchema },
+  logger: true,
+  
 });
 
 
