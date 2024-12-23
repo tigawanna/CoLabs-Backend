@@ -1,6 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { listRecordSchema } from "../../utils/response.ts";
 
+// TODO : create a schema for the params
 const ParamsSchema = z.object({
   id: z
     .string()
