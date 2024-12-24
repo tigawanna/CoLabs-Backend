@@ -1,14 +1,23 @@
 import { z } from "@hono/zod-openapi";
 
+export const baseErrorSchema = z.object({
+  code: z.number().openapi({
+    example: 400,
+  }),
+  message: z.string().openapi({
+    example: "Bad Request",
+  }),
+  errors:z.record(z.string(), z.string()).optional(),
+});
 export const baseRecordSchema = z
   .object({
     id: z.string(),
     created_at: z.string(),
-    updated_at: z.string(),
+    updated_at: z.string().nullable()
   })
-  .and(z.record(z.string(), z.unknown()));
+  .and(z.record(z.string(), z.any()));
 
-export const listRecordSchema = z.object({
+export const listResponseBodySchema = z.object({
   page: z.number(),
   perPage: z.number(),
   totalItems: z.number(),
@@ -16,18 +25,32 @@ export const listRecordSchema = z.object({
   items: z.array(baseRecordSchema),
 });
 
-export interface BaseRecord extends Record<string, unknown> {
-  id: string;
-  created_at: string;
-  updated_at: string;
-}
+export const listResponseParamsSchema = z.object({
+  page: z
+    .number()
+    .optional()
+    .default(1)
+    .openapi({
+      param: {
+        name: "page",
+        in: "query",
+      },
+      description: "Page number",
+      example: 1,
+    }),
 
-export type OneRecord<T extends BaseRecord> = T;
+  perPage: z
+    .number()
+    .default(10)
+    .optional()
+    .openapi({
+      param: {
+        name: "page",
+        in: "query",
+      },
+      description: "Page number",
+      example: 1,
+    }),
+});
 
-export interface ListRecord<T extends BaseRecord> {
-  page: number;
-  perPage: number;
-  totalItems: number;
-  totalPages: number;
-  items: T[];
-}
+
