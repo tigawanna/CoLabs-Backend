@@ -1,4 +1,3 @@
-
 import { projectsRoute } from "./routes/projects/index.route.ts";
 import { OpenAPIHono,z } from "@hono/zod-openapi";
 import { parseZodError } from "./utils/errors.ts";
@@ -11,7 +10,7 @@ const app = new OpenAPIHono({
         {
           message: "Validation error",
           code: 400,
-          errors: parseZodError(result.error),
+          data: parseZodError(result.error),
         },
         400
       );
@@ -19,9 +18,11 @@ const app = new OpenAPIHono({
   },
 });
 
+app.route("/projects", projectsRoute);
+
 app.openapi(rootGetRoute, (c) => {
   return c.json({
-    message: "Welecome to honojs-auth-server",
+    message: "Welecome to collab backend",
   }, 200);
 });
 
@@ -36,11 +37,13 @@ app.doc("/doc", {
   openapi: "3.0.0",
   info: {
     version: "1.0.0",
-    title: "SIMPLE AUTH SERVER",
+    title: "Collabs Backend",
   },
 });
 
 
-app.route("/projects", projectsRoute)
+
+
+
 
 Deno.serve({port:5000},app.fetch)
