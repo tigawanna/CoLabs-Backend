@@ -24,5 +24,5 @@ export const db = drizzle({
     connectionString: Deno.env.get("DATABASE_URL"),
   }),
   schema: { ...userSchema, ...projectSchema },
-  logger: new MyLogger(),
+  logger: Deno.env.get("DEV")?new MyLogger():false,
 });
