@@ -13,6 +13,8 @@ import {
 import { commonColumns } from "../helpers/columns.ts";
 import { usersTable } from "./users.ts";
 import { relations } from "drizzle-orm";
+import { createSelectSchema } from "drizzle-zod";
+
 
 const projectType = ["private", "open-source"] as const;
 const platforms = ["web", "mobile", "desktop"] as const;
@@ -87,3 +89,4 @@ export const projectCollaboratorsTableRelations = relations(
     }),
   })
 )
+
