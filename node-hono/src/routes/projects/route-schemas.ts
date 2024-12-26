@@ -3,7 +3,7 @@ import {
   baseErrorSchema,
   listResponseBodySchema,
   listResponseParamsSchema,
-} from "@/utils/response.js";
+} from "@/utils/schema/response.js";
 import { createSelectSchema, createUpdateSchema, createInsertSchema } from "drizzle-zod";
 
 export const projectSelectSchema = createSelectSchema(projectsTable);
@@ -17,3 +17,5 @@ export const ProjectsSchema = listResponseBodySchema.omit({ items: true }).exten
   items: projectSelectSchema.array(),
 });
 export const ListProjectsErrorSchema = baseErrorSchema.extend({});
+
+export const InsertProjectsErrorSchema = baseErrorSchema.extend({});

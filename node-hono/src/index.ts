@@ -4,6 +4,7 @@ import { swaggerUI } from "@hono/swagger-ui";
 import { parseZodError } from './utils/errors.js';
 import { projectsRoute } from './routes/projects/index.route.js';
 import { rootGetRoute } from './routes/home/home.get.js';
+import { envVariables } from './env.js';
 
 const app = new OpenAPIHono({
   defaultHook: (result, c) => {
@@ -47,7 +48,7 @@ app.doc("/doc", {
 });
 
 
-const port = 3000
+const port = envVariables.port || 5000
 console.log(`Server is running on http://localhost:${port}`)
 
 serve({

@@ -1,8 +1,9 @@
 import { z } from "@hono/zod-openapi";
 
 const errorMessageEnums = [
-  "validation_required",
+  "validation_failed",
   "authorization_required",
+  "internal_server_error",
   "not_found",
   "conflict",
 ] as const;
@@ -22,7 +23,7 @@ export const baseErrorSchema = z.object({
           example: "Bad Request",
         }),
         code: z.enum(errorMessageEnums).openapi({
-          example: "validation_required",
+          example: "validation_failed",
         }),
       })
     )

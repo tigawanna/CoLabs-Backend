@@ -1,5 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
-import { ProjectsParamsSchema, ProjectsSchema, ListProjectsErrorSchema, projectInsertSchema } from "./route-schemas.js";
+import { ProjectsParamsSchema, ProjectsSchema, ListProjectsErrorSchema, projectInsertSchema, InsertProjectsErrorSchema } from "./route-schemas.js";
 
 export const getProjectsRoute = createRoute({
   method: "get",
@@ -59,18 +59,18 @@ export const createProjectsRoute = createRoute({
     400: {
       content: {
         "application/json": {
-          schema: ListProjectsErrorSchema,
+          schema: InsertProjectsErrorSchema,
         },
       },
-      description: "Bad request",
+      description: "Invalid request",
     },
     500: {
       content: {
         "application/json": {
-          schema: ListProjectsErrorSchema,
+          schema: InsertProjectsErrorSchema,
         },
       },
-      description: "Internal error fetching projects",
+      description: "Internal error adding new project",
     },
   },
 });

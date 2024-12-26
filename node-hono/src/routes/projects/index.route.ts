@@ -1,7 +1,8 @@
 import { OpenAPIHono, z } from "@hono/zod-openapi";
-import { getProjectsRoute } from "./index-routes.js";
+import { createProjectsRoute, getProjectsRoute } from "./index-routes.js";
 import { projectsTable } from "@/db/schema/project.js";
 import { db } from "@/db/client.js";
+import { returnValidationData } from "@/utils/errors.js";
 
 const app = new OpenAPIHono();
 //GET /projects
@@ -43,6 +44,37 @@ app.openapi(getProjectsRoute, async (c) => {
               code: "authorization_required",
             } as const,
           },
+        },
+        400
+      );
+    }
+    return c.json(
+      {
+        message: "Something went wrong",
+        code: 500,
+        data: {
+          name: {
+            message: "Something went wrong",
+            code: "authorization_required",
+          } as const,
+        },
+      },
+      500
+    );
+  }
+});
+app.openapi(createProjectsRoute, async (c) => {
+  const bodyValues = await c.req.json();
+  try {
+    const project = await db.insert(projectsTable).values(bodyValues).returning();
+    return c.json(project, 200);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return c.json(
+        {
+          message: error.message,
+          code: 400,
+          data:returnValidationData(error),
         },
         400
       );

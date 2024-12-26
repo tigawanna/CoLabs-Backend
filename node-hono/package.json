@@ -2,6 +2,10 @@
   "name": "collabs-backend-node-hono",
   "type": "module",
   "scripts": {
+    "drizzle:gen": "drizzle-kit generate",
+    "drizzle:push": "drizzle-kit push ",
+    "drizzle:migrate": "drizzle-kit migrate ",
+    "drizzle:seed": "drizzle-seed",
     "dev": "tsx watch src/index.ts"
   },
   "dependencies": {
