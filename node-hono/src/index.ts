@@ -6,6 +6,7 @@ import { projectsRoute } from './routes/projects/index.route.js';
 import { rootGetRoute } from './routes/home/home.get.js';
 import { envVariables } from './env.js';
 
+// TODO: move evrything to hono openapi instead of zod openapi
 const app = new OpenAPIHono({
   defaultHook: (result, c) => {
     console.log(" ==========  result =========== ",result);
