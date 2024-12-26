@@ -5,10 +5,13 @@
     "strict": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
-    "types": [
-      "node"
-    ],
+    "types": ["node"],
+    "noEmit": true,
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@db/": ["./src/db/*"]
+    }
   }
 }

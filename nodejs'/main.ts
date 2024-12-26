@@ -1,7 +1,7 @@
 import { projectsRoute } from "./routes/projects/index.route.ts";
 import { OpenAPIHono,z } from "@hono/zod-openapi";
-import { parseZodError } from "./utils/errors.ts";
 import { swaggerUI } from "@hono/swagger-ui";
+import { parseZodError } from "./utils/errors.ts";
 import { rootGetRoute } from "./routes/home/home.get.ts";
 const app = new OpenAPIHono({
   defaultHook: (result, c) => {
