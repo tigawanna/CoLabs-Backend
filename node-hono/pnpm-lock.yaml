@@ -39,6 +39,9 @@ importers:
         specifier: ^3.24.1
         version: 3.24.1
     devDependencies:
+      '@faker-js/faker':
+        specifier: ^9.3.0
+        version: 9.3.0
       '@types/node':
         specifier: ^20.11.17
         version: 20.17.10
@@ -48,9 +51,15 @@ importers:
       drizzle-kit:
         specifier: ^0.30.1
         version: 0.30.1
+      drizzle-seed:
+        specifier: ^0.2.1
+        version: 0.2.1(drizzle-orm@0.38.3(@types/pg@8.11.10)(pg@8.13.1))
       tsx:
         specifier: ^4.7.1
         version: 4.19.2
+      typescript:
+        specifier: ^5.7.2
+        version: 5.7.2
 
 packages:
 
@@ -484,6 +493,10 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@faker-js/faker@9.3.0':
+    resolution: {integrity: sha512-r0tJ3ZOkMd9xsu3VRfqlFR6cz0V/jFYRswAIpC+m/DIfAUXq7g8N7wTAlhSANySXYGKzGryfDXwtwsY8TxEIDw==}
+    engines: {node: '>=18.0.0', npm: '>=9.0.0'}
+
   '@hono/node-server@1.13.7':
     resolution: {integrity: sha512-kTfUMsoloVKtRA2fLiGSd9qBddmru9KadNyhJCwgKBxTiNkaAJEwkVN9KV/rS4HtmmNRtUh6P+YpmjRMl0d9vQ==}
     engines: {node: '>=18.14.1'}
@@ -626,6 +639,14 @@ packages:
       sqlite3:
         optional: true
 
+  drizzle-seed@0.2.1:
+    resolution: {integrity: sha512-PbIhPf/gsUYj/TLD0YiTAPj4GJjzavCvwgjFWHZtbcGAwysFVxcVkgTYbszAYyg5qPdeCMR5cxRACTATsyU+Iw==}
+    peerDependencies:
+      drizzle-orm: '>=0.36.4'
+    peerDependenciesMeta:
+      drizzle-orm:
+        optional: true
+
   drizzle-zod@0.6.1:
     resolution: {integrity: sha512-huEbUgnsuR8tupnmLiyB2F1I2H9dswI3GfM36IbIqx9i0YUeYjRsDpJVyFVeziUvI1ogT9JHRL2Q03cC4QmvxA==}
     peerDependencies:
@@ -750,6 +771,9 @@ packages:
   postgres-range@1.1.4:
     resolution: {integrity: sha512-i/hbxIE9803Alj/6ytL7UHQxRvZkI9O4Sy+J3HGc4F4oo/2eQAjTSNJ0bfxyse3bH0nuVesCk+3IRLaMtG3H6w==}
 
+  pure-rand@6.1.0:
+    resolution: {integrity: sha512-bVWawvoZoBYpp6yIoQtQXHZjmz35RSVHnUOTefl8Vcjr8snTPY1wnpSPMWekcFwbxI6gtmT7rSYPFvz71ldiOA==}
+
   resolve-pkg-maps@1.0.0:
     resolution: {integrity: sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==}
 
@@ -767,6 +791,11 @@ packages:
   tsx@4.19.2:
     resolution: {integrity: sha512-pOUl6Vo2LUq/bSa8S5q7b91cgNSjctn9ugq/+Mvow99qW6x/UZYwzxy/3NmqoT66eHYfCVvFvACC58UBPFf28g==}
     engines: {node: '>=18.0.0'}
+    hasBin: true
+
+  typescript@5.7.2:
+    resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
+    engines: {node: '>=14.17'}
     hasBin: true
 
   undici-types@6.19.8:
@@ -1014,6 +1043,8 @@ snapshots:
   '@esbuild/win32-x64@0.23.1':
     optional: true
 
+  '@faker-js/faker@9.3.0': {}
+
   '@hono/node-server@1.13.7(hono@4.6.14)':
     dependencies:
       hono: 4.6.14
@@ -1065,6 +1096,12 @@ snapshots:
     optionalDependencies:
       '@types/pg': 8.11.10
       pg: 8.13.1
+
+  drizzle-seed@0.2.1(drizzle-orm@0.38.3(@types/pg@8.11.10)(pg@8.13.1)):
+    dependencies:
+      pure-rand: 6.1.0
+    optionalDependencies:
+      drizzle-orm: 0.38.3(@types/pg@8.11.10)(pg@8.13.1)
 
   drizzle-zod@0.6.1(drizzle-orm@0.38.3(@types/pg@8.11.10)(pg@8.13.1))(zod@3.24.1):
     dependencies:
@@ -1242,6 +1279,8 @@ snapshots:
 
   postgres-range@1.1.4: {}
 
+  pure-rand@6.1.0: {}
+
   resolve-pkg-maps@1.0.0: {}
 
   source-map-support@0.5.21:
@@ -1259,6 +1298,8 @@ snapshots:
       get-tsconfig: 4.8.1
     optionalDependencies:
       fsevents: 2.3.3
+
+  typescript@5.7.2: {}
 
   undici-types@6.19.8: {}
 

@@ -1,4 +1,4 @@
-import { db } from "../../db/client.ts";
+import { db } from "@/db/client.js";
 
 export async function getProjects() {
   const projects = await db.query.projectsTable.findMany({
