@@ -1,19 +1,20 @@
 import { serve } from '@hono/node-server'
 import { OpenAPIHono, z } from "@hono/zod-openapi";
 import { swaggerUI } from "@hono/swagger-ui";
-import { parseZodError } from './utils/errors.js';
+import { returnValidationData } from './utils/errors.js';
 import { projectsRoute } from './routes/projects/index.route.js';
 import { rootGetRoute } from './routes/home/home.get.js';
 import { envVariables } from './env.js';
 
 const app = new OpenAPIHono({
   defaultHook: (result, c) => {
+    console.log(" ==========  result =========== ",result);
     if (!result.success && result.error && result.error instanceof z.ZodError) {
       return c.json(
         {
           message: "Validation error",
           code: 400,
-          data: parseZodError(result.error),
+          data: returnValidationData(result.error),
         },
         400
       );

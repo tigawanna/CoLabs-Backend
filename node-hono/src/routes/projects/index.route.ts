@@ -65,16 +65,19 @@ app.openapi(getProjectsRoute, async (c) => {
 });
 app.openapi(createProjectsRoute, async (c) => {
   const bodyValues = await c.req.json();
+  console.log(bodyValues);
   try {
     const project = await db.insert(projectsTable).values(bodyValues).returning();
     return c.json(project, 200);
   } catch (error) {
     if (error instanceof z.ZodError) {
+      const valError = returnValidationData(error);
+      console.log({valError});
       return c.json(
         {
           message: error.message,
           code: 400,
-          data:returnValidationData(error),
+          data: valError,
         },
         400
       );
@@ -85,8 +88,8 @@ app.openapi(createProjectsRoute, async (c) => {
         code: 500,
         data: {
           name: {
-            message: "Something went wrong",
-            code: "authorization_required",
+            message: (error as any) ?.message,
+            code: "internal_server_error",
           } as const,
         },
       },
