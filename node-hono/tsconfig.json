@@ -9,6 +9,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
+    "noErrorTruncation": true,
     "paths": {
       "@/*": ["./src/*"],
       "@db/": ["./src/db/*"]

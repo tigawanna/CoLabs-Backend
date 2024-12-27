@@ -51,6 +51,9 @@ importers:
       '@faker-js/faker':
         specifier: ^9.3.0
         version: 9.3.0
+      '@scalar/hono-api-reference':
+        specifier: ^0.5.165
+        version: 0.5.165(hono@4.6.14)
       '@types/node':
         specifier: ^20.11.17
         version: 20.17.10
@@ -567,6 +570,20 @@ packages:
   '@jsdevtools/ono@7.1.3':
     resolution: {integrity: sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==}
 
+  '@scalar/hono-api-reference@0.5.165':
+    resolution: {integrity: sha512-UOdH9vKQxNC5wi3fQufq44g93x3oE7YoeI1bdLncbrK3Nm+XtLe4Wc0kSpz1n6gsjvqSJij/ioXmkC8OJpM5hA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      hono: ^4.0.0
+
+  '@scalar/openapi-types@0.1.5':
+    resolution: {integrity: sha512-6geH9ehvQ/sG/xUyy3e0lyOw3BaY5s6nn22wHjEJhcobdmWyFER0O6m7AU0ZN4QTjle/gYvFJOjj552l/rsNSw==}
+    engines: {node: '>=18'}
+
+  '@scalar/types@0.0.25':
+    resolution: {integrity: sha512-sGnOFnfiSn4o23rklU/jrg81hO+630bsFIdHg8MZ/w2Nc6IoUwARA2hbe4d4Fg+D0KBu40Tan/L+WAYDXkTJQg==}
+    engines: {node: '>=18'}
+
   '@sinclair/typebox@0.34.13':
     resolution: {integrity: sha512-ceVKqyCEgC355Kw0s/0tyfY9MzMQINSykJ/pG2w6YnaZyrcjV48svZpr8lVZrYgWjzOmrIPBhQRAtr/7eJpA5g==}
 
@@ -578,6 +595,9 @@ packages:
 
   '@types/pg@8.11.10':
     resolution: {integrity: sha512-LczQUW4dbOQzsH2RQ5qoeJ6qJPdrcM/DcMLoqWQkMLMsq83J5lAX3LXjdkWdpscFy67JSOWDnh7Ny/sPFykmkg==}
+
+  '@unhead/schema@1.11.14':
+    resolution: {integrity: sha512-V9W9u5tF1/+TiLqxu+Qvh1ShoMDkPEwHoEo4DKdDG6ko7YlbzFfDxV6el9JwCren45U/4Vy/4Xi7j8OH02wsiA==}
 
   '@valibot/to-json-schema@1.0.0-beta.3':
     resolution: {integrity: sha512-20XQh1u5sOLwS3NOB7oHCo3clQ9h4GlavXgLKMux2PYpHowb7P97cND0dg8T3+fE1WoKVACcLppvzAPpSx0F+Q==}
@@ -762,6 +782,9 @@ packages:
     resolution: {integrity: sha512-j4VkyUp2xazGJ8eCCLN1Vm/bxdvm/j5ZuU9AIjLu9vapn2M44p9L3Ktr9Vnb2RN2QtcR/wVjZVMlT5k7GJQgPw==}
     engines: {node: '>=16.9.0'}
 
+  hookable@5.5.3:
+    resolution: {integrity: sha512-Yc+BQe8SvoXH1643Qez1zqLRmbA5rCL+sSmk6TVos0LWVfNIB7PGncdlId77WzLGSIB5KaWgTaNTs2lNVEI6VQ==}
+
   js-yaml@4.1.0:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
     hasBin: true
@@ -909,6 +932,9 @@ packages:
     resolution: {integrity: sha512-7r0XPzioN/Q9kXBro/XPnA6kznR73DHq+GXh5ON7ZozRO6aMjbmiBuKste2wslTFkC5d1dw0GooOCepZXJ2SAg==}
     engines: {node: '>= 14'}
     hasBin: true
+
+  zhead@2.2.4:
+    resolution: {integrity: sha512-8F0OI5dpWIA5IGG5NHUg9staDwz/ZPxZtvGVf01j7vHqSyZ0raHY+78atOVxRqb73AotX22uV1pXt3gYSstGag==}
 
   zod-openapi@4.2.2:
     resolution: {integrity: sha512-h1H5ODEc4paf3UKH0h3tp9P3W/FeRXo7wk1bo1P7KofhfxosI4vJdOgeIt2aRyqHorxUAjd/kIvxRWENnBqI5w==}
@@ -1207,6 +1233,18 @@ snapshots:
 
   '@jsdevtools/ono@7.1.3': {}
 
+  '@scalar/hono-api-reference@0.5.165(hono@4.6.14)':
+    dependencies:
+      '@scalar/types': 0.0.25
+      hono: 4.6.14
+
+  '@scalar/openapi-types@0.1.5': {}
+
+  '@scalar/types@0.0.25':
+    dependencies:
+      '@scalar/openapi-types': 0.1.5
+      '@unhead/schema': 1.11.14
+
   '@sinclair/typebox@0.34.13':
     optional: true
 
@@ -1221,6 +1259,11 @@ snapshots:
       '@types/node': 20.17.10
       pg-protocol: 1.7.0
       pg-types: 4.0.2
+
+  '@unhead/schema@1.11.14':
+    dependencies:
+      hookable: 5.5.3
+      zhead: 2.2.4
 
   '@valibot/to-json-schema@1.0.0-beta.3(valibot@1.0.0-beta.9(typescript@5.7.2))':
     dependencies:
@@ -1395,6 +1438,8 @@ snapshots:
 
   hono@4.6.14: {}
 
+  hookable@5.5.3: {}
+
   js-yaml@4.1.0:
     dependencies:
       argparse: 2.0.1
@@ -1518,6 +1563,8 @@ snapshots:
   xtend@4.0.2: {}
 
   yaml@2.6.1: {}
+
+  zhead@2.2.4: {}
 
   zod-openapi@4.2.2(zod@3.24.1):
     dependencies:
