@@ -5,5 +5,5 @@ export const commonColumns = {
     .$defaultFn(() => uuidv7())
     .primaryKey(),
   updated_at: timestamp(),
-  created_at: timestamp().defaultNow().notNull(),
+  created_at: timestamp().defaultNow()
 };

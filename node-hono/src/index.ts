@@ -6,17 +6,16 @@ import { apiReference } from "@scalar/hono-api-reference";
 import { swaggerUI } from "@hono/swagger-ui";
 import { homeRoute } from "./routes/home/index.js";
 import { projectsRoute } from "./routes/projects/main.js";
-import { projectsGetRoute } from "./routes/projects/index/get/route.js";
-import { projectsPostRoute } from "./routes/projects/index/post/route.js";
+
 
 
 const app = new Hono();
 
 
 app.route("/",homeRoute)
-// app.route("/projects", projectsRoute);
-app.route("/projects", projectsGetRoute);
-app.route("/projects", projectsPostRoute);
+app.route("/projects", projectsRoute);
+// app.route("/projects", projectsGetRoute);
+// app.route("/projects", projectsPostRoute);
 
 
 const port = envVariables.port || 5000;

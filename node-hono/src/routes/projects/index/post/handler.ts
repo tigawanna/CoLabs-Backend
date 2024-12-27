@@ -16,7 +16,7 @@ type ContextInput = {
 };
 export async function createProject(c: Context<{}, "/", ContextInput>) {
   try {
-    const bodyValues = await c.req.json<Project>();
+    const bodyValues = await c.req.json();
     const project = await db.insert(projectsTable).values(bodyValues).returning();
     return c.json(project, 200);
   } catch (error) {
