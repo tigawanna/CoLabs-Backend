@@ -7,16 +7,10 @@ import { swaggerUI } from "@hono/swagger-ui";
 import { homeRoute } from "./routes/home/index.ts";
 import { projectsRoute } from "./routes/projects/main.ts";
 
-
-
 const app = new Hono();
 
-
-app.route("/",homeRoute)
+app.route("/", homeRoute);
 app.route("/projects", projectsRoute);
-// app.route("/projects", projectsGetRoute);
-// app.route("/projects", projectsPostRoute);
-
 
 const port = envVariables.port || 5000;
 console.log(`Server is running on http://localhost:${port}`);
@@ -24,7 +18,11 @@ app.get(
   "/openapi",
   openAPISpecs(app, {
     documentation: {
-      info: { title: "Collabs Backend API", version: "1.0.0", description: "Collabs Nodejs Backend Backend" },
+      info: {
+        title: "Collabs Backend API",
+        version: "1.0.0",
+        description: "Collabs Nodejs Backend Backend",
+      },
       servers: [{ url: `http://localhost:${port}`, description: "Local Server" }],
     },
   })
