@@ -1,6 +1,7 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import pg from "pg";
 import * as userSchema from "./schema/users.ts";
+import * as authSchema from "./schema/auth.ts";
 import * as projectSchema from "./schema/project.ts";
 import type { Logger } from "drizzle-orm/logger";
 import { formatSqlQuery } from "./helpers/query-logger.ts";
@@ -24,6 +25,6 @@ export const db = drizzle({
   client: new Pool({
     connectionString: envVariables.dbUrl,
   }),
-  schema: { ...userSchema, ...projectSchema },
-  logger: envVariables.NODE_ENV === "development"?new MyLogger():false,
+  schema: { ...projectSchema, ...authSchema },
+  logger: envVariables.NODE_ENV === "development" ? new MyLogger() : false,
 });

@@ -1,6 +1,6 @@
 import { seed, reset } from "drizzle-seed";
-import { usersTable } from "./schema/users.js";
-import { projectsTable, projectCollaboratorsTable } from "./schema/project.js";
+import { usersTable } from "./schema/auth.ts";
+import { projectsTable, projectCollaboratorsTable } from "./schema/project.ts";
 import { db } from "./client.js";
 
 
