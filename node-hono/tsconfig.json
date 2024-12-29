@@ -1,15 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "NodeNext",
-    "strict": true,
-    "verbatimModuleSyntax": true,
+    /* Base Options: */
+    "esModuleInterop": true,
     "skipLibCheck": true,
+    "target": "es2022",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "module": "NodeNext",
+    "allowImportingTsExtensions": true,
+    "strict": true,
     "types": ["node"],
     "noEmit": true,
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
     "noErrorTruncation": true,
+    "lib": ["es2022"],
     "paths": {
       "@/*": ["./src/*"],
       "@db/": ["./src/db/*"]

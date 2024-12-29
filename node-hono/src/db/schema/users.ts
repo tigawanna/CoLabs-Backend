@@ -1,7 +1,7 @@
 import { pgTable, varchar } from "drizzle-orm/pg-core";
-import { commonColumns } from "../helpers/columns.js";
+import { commonColumns } from "../helpers/columns.ts";
 import { relations } from "drizzle-orm";
-import { projectsTable } from "./project.js";
+import { projectsTable } from "./project.ts";
 
 export const usersTable = pgTable("users", {
   ...commonColumns,

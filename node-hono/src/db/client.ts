@@ -1,10 +1,10 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import pg from "pg";
-import * as userSchema from "./schema/users.js";
-import * as projectSchema from "./schema/project.js";
+import * as userSchema from "./schema/users.ts";
+import * as projectSchema from "./schema/project.ts";
 import type { Logger } from "drizzle-orm/logger";
-import { formatSqlQuery } from "./helpers/query-logger.js";
-import { envVariables } from "@/env.js";
+import { formatSqlQuery } from "./helpers/query-logger.ts";
+import { envVariables } from "@/env.ts";
 
 class MyLogger implements Logger {
   logQuery(query: string, params: unknown[]): void {

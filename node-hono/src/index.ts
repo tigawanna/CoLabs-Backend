@@ -4,8 +4,8 @@ import { Hono } from "hono";
 import { openAPISpecs } from "hono-openapi";
 import { apiReference } from "@scalar/hono-api-reference";
 import { swaggerUI } from "@hono/swagger-ui";
-import { homeRoute } from "./routes/home/index.js";
-import { projectsRoute } from "./routes/projects/main.js";
+import { homeRoute } from "./routes/home/index.ts";
+import { projectsRoute } from "./routes/projects/main.ts";
 
 
 

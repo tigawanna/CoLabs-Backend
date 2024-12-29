@@ -10,8 +10,8 @@ import {
   unique,
   index,
 } from "drizzle-orm/pg-core";
-import { commonColumns } from "../helpers/columns.js";
-import { usersTable } from "./users.js";
+import { commonColumns } from "../helpers/columns.ts";
+import { usersTable } from "./users.ts";
 import { relations } from "drizzle-orm";
 
 
