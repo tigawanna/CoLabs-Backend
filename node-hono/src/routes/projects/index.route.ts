@@ -1,6 +1,6 @@
 import { Hono } from "hono";
-import { projectsGetRoute } from "./index/get/route.js";
-import { projectsPostRoute } from "./index/post/route.js";
+import { projectsGetRoute } from "./index/get/route.ts";
+import { projectsPostRoute } from "./index/post/route.ts";
 
 const app = new Hono();
 
