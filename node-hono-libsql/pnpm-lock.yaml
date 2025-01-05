@@ -20,9 +20,6 @@ importers:
       '@hono/zod-validator':
         specifier: ^0.4.2
         version: 0.4.2(hono@4.6.14)(zod@3.24.1)
-      '@neondatabase/serverless':
-        specifier: ^0.10.4
-        version: 0.10.4
       better-auth:
         specifier: ^1.1.4
         version: 1.1.4
@@ -31,10 +28,10 @@ importers:
         version: 16.4.7
       drizzle-orm:
         specifier: ^0.38.3
-        version: 0.38.3(@neondatabase/serverless@0.10.4)(@types/pg@8.11.10)(kysely@0.27.5)(pg@8.13.1)
+        version: 0.38.3(@types/pg@8.11.10)(kysely@0.27.5)(pg@8.13.1)
       drizzle-zod:
         specifier: ^0.6.1
-        version: 0.6.1(drizzle-orm@0.38.3(@neondatabase/serverless@0.10.4)(@types/pg@8.11.10)(kysely@0.27.5)(pg@8.13.1))(zod@3.24.1)
+        version: 0.6.1(drizzle-orm@0.38.3(@types/pg@8.11.10)(kysely@0.27.5)(pg@8.13.1))(zod@3.24.1)
       hono:
         specifier: ^4.6.14
         version: 4.6.14
@@ -71,7 +68,7 @@ importers:
         version: 0.30.1
       drizzle-seed:
         specifier: ^0.2.1
-        version: 0.2.1(drizzle-orm@0.38.3(@neondatabase/serverless@0.10.4)(@types/pg@8.11.10)(kysely@0.27.5)(pg@8.13.1))
+        version: 0.2.1(drizzle-orm@0.38.3(@types/pg@8.11.10)(kysely@0.27.5)(pg@8.13.1))
       tsup:
         specifier: ^8.3.5
         version: 8.3.5(tsx@4.19.2)(typescript@5.7.2)(yaml@2.6.1)
@@ -763,9 +760,6 @@ packages:
   '@levischuck/tiny-cbor@0.2.2':
     resolution: {integrity: sha512-f5CnPw997Y2GQ8FAvtuVVC19FX8mwNNC+1XJcIi16n/LTJifKO6QBgGLgN3YEmqtGMk17SKSuoWES3imJVxAVw==}
 
-  '@neondatabase/serverless@0.10.4':
-    resolution: {integrity: sha512-2nZuh3VUO9voBauuh+IGYRhGU/MskWHt1IuZvHcJw6GLjDgtqj/KViKo7SIrLdGLdot7vFbiRRw+BgEy3wT9HA==}
-
   '@noble/ciphers@0.6.0':
     resolution: {integrity: sha512-mIbq/R9QXk5/cTfESb1OKtyFnk7oc1Om/8onA1158K9/OZUQFDEVy55jVTato+xmp3XX6F6Qh0zz0Nc1AxAlRQ==}
 
@@ -922,9 +916,6 @@ packages:
 
   '@types/pg@8.11.10':
     resolution: {integrity: sha512-LczQUW4dbOQzsH2RQ5qoeJ6qJPdrcM/DcMLoqWQkMLMsq83J5lAX3LXjdkWdpscFy67JSOWDnh7Ny/sPFykmkg==}
-
-  '@types/pg@8.11.6':
-    resolution: {integrity: sha512-/2WmmBXHLsfRqzfHW7BNZ8SbYzE8OSk7i3WjFYvfgRHj7S1xj+16Je5fUKv3lVdVzk/zn9TXOqf+avFCFIE0yQ==}
 
   '@unhead/schema@1.11.14':
     resolution: {integrity: sha512-V9W9u5tF1/+TiLqxu+Qvh1ShoMDkPEwHoEo4DKdDG6ko7YlbzFfDxV6el9JwCren45U/4Vy/4Xi7j8OH02wsiA==}
@@ -2024,10 +2015,6 @@ snapshots:
 
   '@levischuck/tiny-cbor@0.2.2': {}
 
-  '@neondatabase/serverless@0.10.4':
-    dependencies:
-      '@types/pg': 8.11.6
-
   '@noble/ciphers@0.6.0': {}
 
   '@noble/hashes@1.6.1': {}
@@ -2169,12 +2156,6 @@ snapshots:
       pg-protocol: 1.7.0
       pg-types: 4.0.2
 
-  '@types/pg@8.11.6':
-    dependencies:
-      '@types/node': 20.17.10
-      pg-protocol: 1.7.0
-      pg-types: 4.0.2
-
   '@unhead/schema@1.11.14':
     dependencies:
       hookable: 5.5.3
@@ -2296,22 +2277,21 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.38.3(@neondatabase/serverless@0.10.4)(@types/pg@8.11.10)(kysely@0.27.5)(pg@8.13.1):
+  drizzle-orm@0.38.3(@types/pg@8.11.10)(kysely@0.27.5)(pg@8.13.1):
     optionalDependencies:
-      '@neondatabase/serverless': 0.10.4
       '@types/pg': 8.11.10
       kysely: 0.27.5
       pg: 8.13.1
 
-  drizzle-seed@0.2.1(drizzle-orm@0.38.3(@neondatabase/serverless@0.10.4)(@types/pg@8.11.10)(kysely@0.27.5)(pg@8.13.1)):
+  drizzle-seed@0.2.1(drizzle-orm@0.38.3(@types/pg@8.11.10)(kysely@0.27.5)(pg@8.13.1)):
     dependencies:
       pure-rand: 6.1.0
     optionalDependencies:
-      drizzle-orm: 0.38.3(@neondatabase/serverless@0.10.4)(@types/pg@8.11.10)(kysely@0.27.5)(pg@8.13.1)
+      drizzle-orm: 0.38.3(@types/pg@8.11.10)(kysely@0.27.5)(pg@8.13.1)
 
-  drizzle-zod@0.6.1(drizzle-orm@0.38.3(@neondatabase/serverless@0.10.4)(@types/pg@8.11.10)(kysely@0.27.5)(pg@8.13.1))(zod@3.24.1):
+  drizzle-zod@0.6.1(drizzle-orm@0.38.3(@types/pg@8.11.10)(kysely@0.27.5)(pg@8.13.1))(zod@3.24.1):
     dependencies:
-      drizzle-orm: 0.38.3(@neondatabase/serverless@0.10.4)(@types/pg@8.11.10)(kysely@0.27.5)(pg@8.13.1)
+      drizzle-orm: 0.38.3(@types/pg@8.11.10)(kysely@0.27.5)(pg@8.13.1)
       zod: 3.24.1
 
   eastasianwidth@0.2.0: {}
