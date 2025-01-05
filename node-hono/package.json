@@ -7,6 +7,7 @@
     "drizzle:migrate": "drizzle-kit migrate ",
     "drizzle:seed": "drizzle-seed",
     "dev": "tsx watch src/index.ts",
+    "build": "tsup",
     "secret": "node -e 'console.log(crypto.randomBytes(48).toString('hex'))'"
   },
   "dependencies": {
@@ -36,5 +37,9 @@
     "tsup": "^8.3.5",
     "tsx": "^4.7.1",
     "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20",
+    "npm": ">=10"
   }
 }
