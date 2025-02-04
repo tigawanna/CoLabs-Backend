@@ -2,7 +2,7 @@ import { relations } from "drizzle-orm";
 import { jsonb, pgEnum, pgTable, text } from "drizzle-orm/pg-core";
 
 import { commonColumns } from "../helpers/columns";
-import { userTable } from "./auth";
+import { user } from "./auth";
 
 export const auditAction = [
   "LIST",
@@ -18,7 +18,7 @@ export const auditActionEnum = pgEnum("action", auditAction);
 
 export const auditLogsTable = pgTable("audit_logs", {
   ...commonColumns,
-  userId: text("user_id").references(() => userTable.id),
+  userId: text("user_id").references(() => user.id),
   table: text("table").notNull(),
   action: auditActionEnum("action").notNull(),
   oldData: jsonb("old_data").$type<Record<string, any>>(),
@@ -27,8 +27,8 @@ export const auditLogsTable = pgTable("audit_logs", {
 });
 
 export const auditLogRelations = relations(auditLogsTable, ({ one }) => ({
-  user: one(userTable, {
+  user: one(user, {
     fields: [auditLogsTable.userId],
-    references: [userTable.id],
+    references: [user.id],
   }),
 }));

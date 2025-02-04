@@ -41,7 +41,7 @@ async function createLocalPool() {
     try {
       const client = await pool.connect();
 
-      console.log("Successfully connected to local database");
+      console.log(`${ANSIColors.FgGreen}Successfully connected to local database at ${envVariables.DATABASE_URL}${ANSIColors.Reset}`);
       client.release();
       return pool;
     }
@@ -55,7 +55,7 @@ async function createLocalPool() {
   throw new Error("Failed to connect to database after multiple attempts");
 }
 
-const SCHEMAS = { ...authSchema, ...auditLogSchema };
+export const SCHEMAS = { ...authSchema, ...auditLogSchema };
 // const SCHEMAS = { };
 export async function createDB() {
   if (envVariables.NODE_ENV === "development") {
@@ -66,22 +66,22 @@ export async function createDB() {
       logger: envVariables.LOG_LEVEL === "debug" && new MyLogger(),
     });
   }
-
+  console.log(`${ANSIColors.FgGreen}Successfully connected to neon database at ${envVariables.DATABASE_URL}${ANSIColors.Reset}`);
   return drizzle({
     client: neon(envVariables.DATABASE_URL),
     schema: SCHEMAS,
   });
 }
 
-// export const db = await createDB().catch((error) => {
-//   console.error("Failed to initialize database:", error);
-//   process.exit(1);
-// });
-
-export const db = drizzle({
-  client: neon(envVariables.DATABASE_URL),
-  schema: SCHEMAS,
+export const db = await createDB().catch((error) => {
+  console.error("Failed to initialize database:", error);
+  process.exit(1);
 });
+
+// export const db = drizzle({
+//   client: neon(envVariables.DATABASE_URL),
+//   schema: SCHEMAS,
+// });
 
 //  run only use for local
 // const pool = await createLocalPool();

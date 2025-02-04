@@ -1,18 +1,18 @@
 import { createInsertSchema, createSelectSchema, createUpdateSchema } from "drizzle-zod";
 import { z } from "zod";
 
-import { userTable } from "@/db/schema/auth";
+import { user } from "@/db/schema/auth";
 import { genericQueryParamsSchema } from "@/schemas/shared-schema";
 
-export const userSelectSchema = createSelectSchema(userTable);
-export const userInsertSchema = createInsertSchema(userTable);
-export const userUpdateSchema = createUpdateSchema(userTable);
+export const userSelectSchema = createSelectSchema(user);
+export const userInsertSchema = createInsertSchema(user);
+export const userUpdateSchema = createUpdateSchema(user);
 
 export type UserItem = z.infer<typeof userSelectSchema>;
 export type UpdateUser = z.infer<typeof userUpdateSchema>;
 export type CreateUser = z.infer<typeof userInsertSchema>;
 
-const sortBy = ["created_at"] as const satisfies Array<keyof UserItem>;
+const sortBy = ["createdAt"] as const satisfies Array<keyof UserItem>;
 
 export const listUserQueryParamsSchema = genericQueryParamsSchema.extend({
   sort: z.enum(sortBy).optional(),

@@ -2,7 +2,7 @@ import type { z } from "zod";
 
 import { and, getTableName, ilike } from "drizzle-orm";
 
-import { userTable } from "@/db/schema/auth";
+import { user } from "@/db/schema/auth";
 import { BaseCrudService } from "@/services/base-crud-service";
 
 import type {
@@ -12,19 +12,19 @@ import type {
 } from "./user.schema";
 
 export class UserService extends BaseCrudService<
-      typeof userTable,
+      typeof user,
   z.infer<typeof userInsertSchema>,
   z.infer<typeof userUpdateSchema>
 > {
   constructor() {
-    super(userTable, getTableName(userTable));
+    super(user, getTableName(user));
   }
 
   // Override or add custom methods
   override async findAll(query: z.infer<typeof listUserQueryParamsSchema>) {
     const { search, ...paginationQuery } = query;
     const conditions = and(
-      search ? ilike(userTable.name, `%${search}%`) : undefined,
+      search ? ilike(user.name, `%${search}%`) : undefined,
     );
 
     return super.findAll(paginationQuery, conditions);

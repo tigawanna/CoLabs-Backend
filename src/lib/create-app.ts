@@ -38,6 +38,7 @@ export function createApp() {
     const session = await auth.api.getSession({ headers: c.req.raw.headers });
 
     if (!session) {
+      c.var.logger.warn("no session found");
       c.set("user", null);
       c.set("session", null);
       return next();
