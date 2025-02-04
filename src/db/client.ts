@@ -41,7 +41,7 @@ async function createLocalPool() {
     try {
       const client = await pool.connect();
 
-      console.log(`${ANSIColors.FgGreen}Successfully connected to local database at ${envVariables.DATABASE_URL}${ANSIColors.Reset}`);
+      console.log(`${ANSIColors.FgGreen}Successfully connected to local database at \n=> ${envVariables.DATABASE_URL}${ANSIColors.Reset}`);
       client.release();
       return pool;
     }
