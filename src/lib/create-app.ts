@@ -47,11 +47,12 @@ export function createApp() {
     c.set("user", session.user);
     c.set("session", session.session);
     c.var.logger.info("new session set ", session);
-    console.log(" ===== session ==== ", session);
+    // console.log(" ===== session ==== ", session);
     return next();
   });
 
   app.on(["POST", "GET"], "/api/auth/**", (c) => {
+    // console.log("auth middleware === ", c.req);
     return auth.handler(c.req.raw);
   });
 

@@ -8,6 +8,8 @@ export const user = pgTable("user", {
   image: text("image"),
   createdAt: timestamp("created_at").notNull(),
   updatedAt: timestamp("updated_at").notNull(),
+  role: text("role"),
+  githubAccessToken: text("github_access_token"),
 });
 
 export const session = pgTable("session", {

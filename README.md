@@ -1,14 +1,35 @@
+## QUick start
+
+Ensure you have a posgresql server running
+add env variables for
+
+```ts
+z.object({
+  GITHUB_CLIENT_ID: z.string().min(5),
+  GITHUB_CLIENT_SECRET: z.string().min(5),
+  BETTER_AUTH_SECRET: z.string().min(10),
+  API_URL: z.string().url(),
+  BETTER_AUTH_URL: z.string().url(),
+  NODE_ENV: z.string().default("development"),
+  PORT: z.coerce.number().default(5000),
+  LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace", "silent"]),
+  DATABASE_URL: z.string().url(),
+  FRONTEND_URL: z.string(),
+});
+```
+
 ```sh
-cd apps/backend (honojs)
+npm run drizzle:push
 npm run dev
 ```
 
 ```sh
+open api reference UI is on
+http://localhost:5000/reference
+
 open api documnetation is on
 http://localhost:5000/doc
 
-open api reference UI is on
-http://localhost:5000/reference
 ```
 
 Uses
@@ -27,10 +48,10 @@ import { Hono } from "hono";
 const app = new Hono();
 
 app.get("/", (c) => {
-// c.req :request
-// c.res: response
-// c.var: async local storage values
-// c.env : enviroment specific methods (nodejs,f=deno,cf workers...)
+  // c.req :request
+  // c.res: response
+  // c.var: async local storage values
+  // c.env : enviroment specific methods (nodejs,f=deno,cf workers...)
   return c.text("Hono!");
   return c.json({ message: "Hono!" });
 });
@@ -44,16 +65,19 @@ which import the actual app setup with routes and middleware , This is to make t
 ```ts
 export function createApp() {
   const app = createRouter();
-  app.use("*", cors({
-    origin: [...allowedOrigins],
-    allowHeaders: ["Content-Type", "Authorization"],
-    allowMethods: ["POST", "GET", "OPTIONS", "PUT", "DELETE", "PATCH"],
-    exposeHeaders: ["Content-Length"],
-    maxAge: 600,
-    credentials: true,
-  })); // enable cors with support for cross site httpOnly cookies
-  app.use(requestId());// adds the requset id (for logging)
-  app.use(pinoLogger());// logging middleware
+  app.use(
+    "*",
+    cors({
+      origin: [...allowedOrigins],
+      allowHeaders: ["Content-Type", "Authorization"],
+      allowMethods: ["POST", "GET", "OPTIONS", "PUT", "DELETE", "PATCH"],
+      exposeHeaders: ["Content-Length"],
+      maxAge: 600,
+      credentials: true,
+    })
+  ); // enable cors with support for cross site httpOnly cookies
+  app.use(requestId()); // adds the requset id (for logging)
+  app.use(pinoLogger()); // logging middleware
   app.use(contextStorage()); // initializes async local storage
   app.use("/api/users/*", (c, next) => authenticateUserMiddleware(c, next)); // auth gurad to only allow logged in users
   app.use("/api/auditlogs/*", (c, next) => authenticateUserMiddleware(c, next, "admin")); // auth gaurd to only allow admin users
@@ -129,7 +153,7 @@ export function configureOpenAPI(app: AppOpenAPI) {
       spec: {
         url: "/doc",
       },
-    }),
+    })
   );
 }
 ```
@@ -152,7 +176,7 @@ const route = createRouter().openapi(
           }),
           error: z.null().optional(),
         }),
-        "Welcome to the Inventory API",
+        "Welcome to the Inventory API"
       ),
     },
   }),
@@ -164,11 +188,10 @@ const route = createRouter().openapi(
           message: "Welcome to the Inventory API",
         },
       },
-      HttpStatusCodes.OK,
+      HttpStatusCodes.OK
     );
-  },
+  }
 );
-;
 //  app.ts
 const app = createApp();
 app.route("/", route);
@@ -189,16 +212,7 @@ serve({
 });
 ```
 
-### Auth stategy
-
-- user signs up with email password
-- `bcypt` is used to hash password and save it to the db with the malil marked as unverified
-- user is redirected to email verification page
-- user uses the token sent to the email to verify the email
-- user is redirected to the home page with the access token and refresh token httpOnly cookie
-- the fronend hits the `auth/me` endpoint to get the user details out of the cookie
-- if the access token is expired and the refresh token is valide the `authenticateUserMiddleware` middleware will refresh the access token and set it in the cookie
-- forgot password and reset password enpoints exist too.
+### Auth stategy :better auth
 
 ### Logging stategy
 
@@ -245,7 +259,7 @@ it can be extended for custom behavior
 ```ts
 // categories required to be filtered by name or categoryId
 export class CategoriesService extends BaseCrudService<
-      typeof categoriesTable,
+  typeof categoriesTable,
   z.infer<typeof categoriesInsertSchema>,
   z.infer<typeof categoriesUpdateSchema>
 > {
@@ -258,7 +272,7 @@ export class CategoriesService extends BaseCrudService<
     const { search, ...paginationQuery } = query;
     const conditions = or(
       search ? ilike(categoriesTable.name, `%${search}%`) : undefined,
-      search ? ilike(categoriesTable.id, `%${search}%`) : undefined,
+      search ? ilike(categoriesTable.id, `%${search}%`) : undefined
     );
 
     return super.findAll(paginationQuery, conditions);
@@ -270,7 +284,11 @@ Inside this abstraction audit logs and caching is perfoemd to increase `DRY`ness
 
 ```ts
 // example of audit logiing,structured logging and caching
-export class BaseCrudService<T extends PgTable<any>, CreateDTO extends Record<string, any>, UpdateDTO extends Record<string, any>> {
+export class BaseCrudService<
+  T extends PgTable<any>,
+  CreateDTO extends Record<string, any>,
+  UpdateDTO extends Record<string, any>,
+> {
   protected table: T;
   protected entityType: EntityType;
   private auditLogService: AuditLogService;
@@ -280,6 +298,7 @@ export class BaseCrudService<T extends PgTable<any>, CreateDTO extends Record<st
     this.entityType = entityType;
     this.auditLogService = new AuditLogService();
   }
+
   async findById(id: string): Promise<FindOneReturnType<T>["item"]> {
     const c = getContext<AppBindings>();
     const cacheKey = `findById:${id}`;
@@ -293,7 +312,7 @@ export class BaseCrudService<T extends PgTable<any>, CreateDTO extends Record<st
     const item = await db
       .select()
       .from(this.table)
-    // TODO : extend type PgTable with a narrower type which always has an ID column
+      // TODO : extend type PgTable with a narrower type which always has an ID column
       // @ts-expect-error : the type is too genrric but shape matches
       .where(eq(this.table.id, id))
       .limit(1);
@@ -311,19 +330,17 @@ export class BaseCrudService<T extends PgTable<any>, CreateDTO extends Record<st
       .values(data as any)
       .returning();
 
-    await this.auditLogService.create(
-      {
-        userId,
-        action: auditAction.CREATE,
-        entityType: this.entityType,
-        entityId: item[0].id,
-        newData: data,
-
-      },
-    );
+    await this.auditLogService.create({
+      userId,
+      action: auditAction.CREATE,
+      entityType: this.entityType,
+      entityId: item[0].id,
+      newData: data,
+    });
 
     return item[0];
   }
+}
 ```
 
 The structred logs could be vased to disk later on but the audit logs are saved to the DB
@@ -334,13 +351,16 @@ The structred logs could be vased to disk later on but the audit logs are saved 
 
 The app can run using local nodejs but a docker setup is also possible
 
+> [!WARNING]
+> This is an adapted dockerfile from another project and it may not work as expected
+
 > [!NOTE]
-> These commands should be run from the root directory of the monorepo
+> These commands should be run from the root directory
 
 1. Build the image (current command)
 
 ```sh
-   sudo docker build -t inventory-hono -f apps/hono/Dockerfile .
+   sudo docker build -t hono -f apps/hono/Dockerfile .
 
 ```
 
@@ -348,9 +368,9 @@ The app can run using local nodejs but a docker setup is also possible
 
 ```sh
    sudo docker run -d \
-     --name inventory-hono-api \
+     --name hono-api \
      -p 5000:80 \
-     inventory-hono
+     hono
 ```
 
 3. Verify container is running
@@ -362,7 +382,7 @@ The app can run using local nodejs but a docker setup is also possible
 4. Check logs if needed
 
 ```sh
-    sudo docker logs inventory-hono-api
+    sudo docker logs hono-api
 ```
 
 5. Access the application
@@ -371,6 +391,6 @@ The app can run using local nodejs but a docker setup is also possible
 6. Stop and remove the container
 
 ```sh
-    sudo docker stop inventory-hono-api
-    sudo docker rm inventory-hono-api
+    sudo docker stop hono-api
+    sudo docker rm hono-api
 ```

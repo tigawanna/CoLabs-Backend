@@ -1,65 +1,52 @@
+# Define build arguments
 ARG NODE_VERSION=23
-ARG PROJECT="."
 ARG PORT=5000
 
-# Alpine image
+# Use Node.js Alpine image as the base
 FROM node:${NODE_VERSION}-alpine AS base
-RUN apk update
-RUN apk add --no-cache gcompat
 
-# Setup pnpm and turbo on the alpine base
-RUN npm install pnpm turbo --global
-RUN pnpm config set store-dir ~/.pnpm-store
-
-# Prune projects
-FROM base AS pruner
-ARG PROJECT
-
-WORKDIR /app
-
-COPY . .
-RUN turbo prune --scope=${PROJECT} --docker
-
-# Build the project
-FROM base AS builder
-ARG PROJECT
-
-WORKDIR /app
-
-# Copy lockfile and package.json's of isolated subworkspace
-COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
-COPY --from=pruner /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
-COPY --from=pruner /app/out/json/ .
-
-# First install dependencies
-RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install --frozen-lockfile
-
-# Copy source code
-COPY --from=pruner /app/out/full/ .
-
-RUN turbo build --filter=${PROJECT}
-RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optional
-RUN rm -rf ./**/*/src
-
-# Final image
-FROM node:${NODE_VERSION}-alpine AS runner
-ARG PROJECT
-ARG PORT
-
-# Install only needed dependencies
-RUN apk add --no-cache gcompat
+# Update Alpine packages and install necessary dependencies
+RUN apk update && apk add --no-cache gcompat
 
 # Create non-root user
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nodejs
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nodejs
+
+# Builder stage
+FROM base AS builder
+
+# Set working directory
+WORKDIR /app
+
+# Copy package.json and lockfile first for caching
+COPY package.json package-lock.json ./
+
+# Install dependencies
+RUN npm install --silent
+
+# Copy the rest of the application code
+COPY . .
+
+# Build the application (if needed)
+RUN npm run build || true
+
+# Final runner stage
+FROM base AS runner
+
+# Use the non-root user
 USER nodejs
 
+# Set working directory
 WORKDIR /app
-COPY --from=builder --chown=nodejs:nodejs /app .
-WORKDIR /app/apps/${PROJECT}
 
+# Copy built artifacts from the builder stage
+COPY --from=builder --chown=nodejs:nodejs /app .
+
+# Expose the port
+ARG PORT
 ENV PORT=${PORT}
 ENV NODE_ENV=production
 EXPOSE ${PORT}
 
+# Start the application
 CMD ["node", "dist/src/index.js"]

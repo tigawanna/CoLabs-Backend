@@ -15,18 +15,46 @@ export const auth = betterAuth({
     openAPI(),
   ],
   advanced: {
-    // crossSubDomainCookies: {
-    //   enabled: true,
-    // },
     defaultCookieAttributes: {
       sameSite: "none",
       secure: true,
     },
+
   },
+
   socialProviders: {
     github: {
+      scopes: ["public_repo", "read:user"],
       clientId: envVariables.GITHUB_CLIENT_ID,
       clientSecret: envVariables.GITHUB_CLIENT_SECRET,
+
+      mapProfileToUser(profile) {
+        console.log("====  mapProfileToUser:profile === ", profile);
+        return {
+          // githubAccessToken: profile.,
+          lastName: profile.name.split(" ")[1],
+        };
+      },
     },
+  },
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        required: false,
+        defaultValue: "user",
+        input: false, // don't allow user to set role
+      },
+      githubAccessToken: {
+        type: "string",
+        required: false,
+      },
+    },
+  },
+  mapProfileToUser: (profile: any) => {
+    console.log("====  mapProfileToUser:profile === ", profile);
+    return {
+      ...profile,
+    };
   },
 });
